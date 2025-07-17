@@ -178,7 +178,7 @@ const Index = () => {
                   }}
                 />
                 
-                <Card className="w-24 h-24 overflow-hidden border-3 border-gray-200 hover:border-amber-400 shadow-xl hover:shadow-2xl transition-all duration-500 bg-white/95 backdrop-blur-sm">
+                <Card className="w-20 h-20 overflow-hidden border-2 border-gray-200 hover:border-amber-400 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/95 backdrop-blur-sm will-change-transform">
                   <img 
                     src={artwork.thumbnail} 
                     alt={artwork.title}
