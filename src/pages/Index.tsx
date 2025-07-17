@@ -48,42 +48,36 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden relative">
-      {/* Main Portrait */}
+    <div className="min-h-screen bg-white overflow-hidden relative">
+      {/* Main Portrait - Full Screen */}
       <div 
         className="absolute inset-0 flex items-center justify-center"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="relative w-96 h-96 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl hover:scale-105 transition-all duration-500">
+        <div className="relative w-full h-full">
           <img 
-            src="/img/f81bf97f-7a72-4172-8874-151f5be82c4e.jpg" 
+            src="https://cdn.poehali.dev/files/7d52a643-f7e3-4c19-a573-1c6901691332.jpeg" 
             alt="AI Artist Portrait" 
-            className="w-full h-full object-cover opacity-90"
+            className="w-full h-full object-cover object-center"
           />
           
-          {/* Eyes */}
-          <div ref={eyeRef} className="absolute top-1/3 left-1/3 w-2 h-2 bg-blue-400 rounded-full transition-all duration-200">
-            <div className={`w-1 h-1 bg-white rounded-full absolute top-0.5 left-0.5 transition-all duration-300 ${isHovered ? 'animate-pulse' : ''}`} />
-          </div>
-          <div className="absolute top-1/3 right-1/3 w-2 h-2 bg-blue-400 rounded-full transition-all duration-200">
-            <div className={`w-1 h-1 bg-white rounded-full absolute top-0.5 left-0.5 transition-all duration-300 ${isHovered ? 'animate-pulse' : ''}`} />
-          </div>
-          
-          {/* Mouth */}
-          <div ref={mouthRef} className={`absolute bottom-1/3 left-1/2 transform -translate-x-1/2 w-4 h-2 border-2 border-pink-300 rounded-full transition-all duration-300 ${isHovered ? 'h-4 border-pink-400' : ''}`} />
+          {/* Interactive overlay for eye tracking */}
+          <div className="absolute inset-0" />
         </div>
       </div>
 
-      {/* Rotating Artworks */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="relative w-[600px] h-[600px]">
+      {/* Halo/Nimbus Rotating Artworks */}
+      <div className="absolute top-0 left-0 w-full h-full flex items-start justify-center pointer-events-none pt-16">
+        <div className="relative w-[400px] h-[200px]">
           {artworks.map((artwork) => {
+            // Elliptical halo path above the head
             const angle = (artwork.angle + rotation) * (Math.PI / 180)
-            const radius = 250
-            const x = Math.cos(angle) * radius
-            const y = Math.sin(angle) * radius
+            const radiusX = 180 // horizontal radius
+            const radiusY = 60  // vertical radius (flattened ellipse)
+            const x = Math.cos(angle) * radiusX
+            const y = Math.sin(angle) * radiusY * 0.3 // flatten even more for halo effect
             
             return (
               <div
@@ -91,20 +85,20 @@ const Index = () => {
                 className="absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-all duration-300 cursor-pointer"
                 style={{
                   left: `50%`,
-                  top: `50%`,
+                  top: `30%`,
                   transform: `translate(${x}px, ${y}px) translate(-50%, -50%)`
                 }}
                 onClick={() => setSelectedArtwork(artwork)}
               >
-                <Card className="w-16 h-16 overflow-hidden border-2 border-white/30 hover:border-white/60 shadow-lg hover:shadow-xl transition-all duration-300">
+                <Card className="w-12 h-12 overflow-hidden border-2 border-gray-300 hover:border-gray-600 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90">
                   <img 
                     src={artwork.thumbnail} 
                     alt={artwork.title}
                     className="w-full h-full object-cover"
                   />
                   {artwork.type === 'video' && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                      <Icon name="Play" size={16} className="text-white" />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                      <Icon name="Play" size={12} className="text-white" />
                     </div>
                   )}
                 </Card>
@@ -115,11 +109,11 @@ const Index = () => {
       </div>
 
       {/* Title */}
-      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-center">
-        <h1 className="text-4xl font-bold text-white mb-2 font-mono tracking-wider">
+      <div className="absolute top-8 left-8 text-left">
+        <h1 className="text-3xl font-bold text-gray-800 mb-1 font-serif">
           НЕЙРОННАЯ ГАЛЕРЕЯ
         </h1>
-        <p className="text-lg text-white/80 font-light">
+        <p className="text-lg text-gray-600 font-light">
           Цифровое искусство будущего
         </p>
       </div>
